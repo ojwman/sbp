@@ -15,12 +15,27 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.junit4.SpringRunner;
 
+import io.ojw.sbp.domain.User;
+import io.ojw.sbp.mapper.UserMapper;
+
 @RunWith(SpringRunner.class)
 @SpringBootTest
 class SbpApplicationTests {
 	@Autowired
 	private DataSource ds;
 	
+	@Autowired
+	private UserMapper mapper;
+	
+	@Test
+	public void testUserMapper() throws Exception {
+		User user = mapper.getLoginInfo("admin");
+		System.out.println("User>>" + user);
+		assertEquals("관리자", user.getName());
+		
+		String user_name = mapper.getName("admin");
+		assertEquals("관리자", user_name);
+	}
 	@Test
 	public void testDataSource() throws Exception {
 		System.out.println("DS=" + ds);
